@@ -1,0 +1,127 @@
+5.2 基本数据操作
+    1.索引操作
+        1.直接 -- 先列后行
+        2.loc -- 先行后列，索引值
+        3.iloc -- 先行后列，索引值的下标
+        4.ix -- 先行后列，混合索引
+    2.赋值操作
+        1.对象[""]
+        2.对象.close
+    3.排序
+        1.dataframe
+            对象.sort_values()
+                by -- 按照什么排序
+                ascending -- 升降序
+            对象.sort_index()
+            注意:by这个参数可以接受多个值,优先按照第一个索引排序,如果相同,按照后面的
+        2.series
+            对象.sort_values()
+            对象.sort_index()
+5.3 DataFrame运算
+    1.算术运算
+        直接使用方法, add, sub ...
+        也可以用符号
+    2.逻辑运算
+        2.1 逻辑运算符号<、 >、|、 &
+            直接判断
+        2.2 逻辑运算函数
+            对象.query("")
+            对象.isin([])
+    3.统计函数
+        对象.describe()
+        统计函数
+            sum
+            mean
+            ...
+            mode -- 众数
+            idxmax -- 最大值的索引
+            idxmin -- 最小值的索引
+    4.累计统计函数
+        函数      作用
+        cumsum  计算前1/2/3/…/n个数的和
+        cummax  计算前1/2/3/…/n个数的最大值
+        cummin  计算前1/2/3/…/n个数的最小值
+        cumprod 计算前1/2/3/…/n个数的积
+    5.自定义运算[***]
+        apply(func, axis=)
+            func -- 自己定义的函数
+5.4 Pandas画图
+    对象.plot()
+        kind --
+            line -- 折线图
+            bar
+            barh -- 条形图旋转
+            hist
+            pie
+            scatter
+5.5 文件读取与存储
+    1.csv
+        1.读取-- pd.read_csv
+            参数:
+            usecols -- 需要哪列
+        2.存储 -- 对象.to_csv
+            参数:
+            columns -- 保存哪列
+    2.hdf
+        1.读取 -- pd.read_hdf()
+        2.写入 -- 对象.to_hdf()
+            注意:保存文件是****.h5
+    3.json
+        1.读取 -- pd.read_json()
+        2.写入 -- 对象.to_josn()
+            参数:
+            orient -- 按照什么方式进行读取或者写入
+            lines -- 是否按照行读取和写入
+    4.推荐使用hdf
+        1.压缩方式,读取效率快
+        2.压缩后,节省空间
+        3.支持跨平台
+
+5.6 高级处理-缺失值处理[*****]
+    判断数据是否为NaN：
+        np.any(pd.isnull(movie))  # 里面如果有一个缺失值,就返回True
+        np.all(pd.notnull(movie))  # 里面如果有一个缺失值,就返回False
+    处理方式：
+        存在缺失值nan,并且是np.nan:
+        1、删除存在缺失值的:dropna(axis='rows')
+            注：不会修改原数据，需要接受返回值
+        2、替换缺失值:fillna(value, inplace=True)
+            value:替换成的值
+            inplace:True:会修改原数据，False:不替换修改原数据，生成新的对象
+    不是缺失值nan，有默认标记的
+        对象.replace()
+            to_replace -- 替换前的值
+            value -- 替换后的值
+5.7 高级处理-数据离散化
+    1.什么是数据离散化
+        把一些数据分到某个区间,最后用不同的符号或者数字表达
+    2.数据离散化api
+        pd.qcut() -- 把数据大致分为数量相等的几类
+        pd.cut()  -- 指定分组间隔
+        数量统计:
+            对象.value_counts()
+    3.one-hot编码
+        就是把数据转换成为0,1统计类型
+        别名:哑变量,热独编码
+        api:
+            pd.get_dummies()
+5.8 高级处理-合并
+    pd.concat()
+        axis=
+    pd.merge()
+        left -- 左表
+        right -- 右表
+        on -- 指定键
+        how -- 按照什么方式进行拼接
+5.9 高级处理-交叉表与透视表
+    1.什么交叉表,透视表
+        就是探索两列数据之间的关系
+    2.pd.crosstab()
+        返回具体数量
+    3.对象.pivot_table()
+        返回占比情况
+5.10 高级处理-分组与聚合
+    1.api
+        对象.groupby()
+            参数:as_index -- 是否进行索引
+        注意:可以对数据进行对此分组,需要里面传递一个列表进行完成.
